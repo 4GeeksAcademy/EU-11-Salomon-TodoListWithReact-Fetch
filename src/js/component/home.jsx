@@ -1,27 +1,38 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Home = () => {
   const [inputValue, setInputValue] = useState("");
   const [todos, setTodos] = useState([]);
   const [data, setData] = useState([]);
 
-    useEffect(() => {
-      const createUser = async () => {
-        fetch ("https://assets.breatheco.de/apis/fake/todos/user/salo", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify([])
-        }).then(res => {
-          return res.json()
-        }).then (data => {
-        console.log(data)
-      })
+  useEffect(() => {
+    const createUser = () => {
+      fetch ("https://assets.breatheco.de/apis/fake/todos/user/salo", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify([])
+      });
     }
-    createUser()
-  }, []);
+    createUser();
+}, [])
+
+
+
+fetch ("https://assets.breatheco.de/apis/fake/todos/user/salo", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify([
+          { label: "Make the bed", done: false },
+          { label: "Walk the dog", done: false },
+          { label: "Do the replits", done: false }
+        ])
+      });
+
+  fetch ("https://assets.breatheco.de/apis/fake/todos/user/salo");
 
   return (
     <div>
@@ -69,7 +80,7 @@ const Home = () => {
         </div>
       </div>
     </div>
-  );
+  )
 };
 
 export default Home; 

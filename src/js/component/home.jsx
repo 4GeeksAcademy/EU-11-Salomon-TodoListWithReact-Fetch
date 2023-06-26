@@ -6,18 +6,10 @@ const Home = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    // Fetch the initial to-do list from the API
-    fetch("https://assets.breatheco.de/apis/fake/todos/user/salo")
-      .then(resp => resp.json())
-      .then(data => setTodos(data))
-      .catch(error => console.log(error));
-  }, []);
-
-  useEffect(() => {
     // Update the API with the modified to-do list whenever todos change
-    fetch("https://assets.breatheco.de/apis/fake/todos/user/salo", {
-      method: "PUT",
-      body: JSON.stringify(todos),
+    fetch("https://assets.breatheco.de/apis/fake/todos/user/salomon", {
+      method: "POST",
+      body: JSON.stringify([]),
       headers: {
         "Content-Type": "application/json"
       }
@@ -34,7 +26,35 @@ const Home = () => {
       .catch(error => {
         console.log(error); // error handling
       });
-  }, [todos]);
+  }, []);
+
+  useEffect(() => {
+    fetch("https://assets.breatheco.de/apis/fake/todos/user/salomon", {
+      method: "PUT",
+      body: JSON.stringify([{ label: "Make the bed", done: false },
+      { label: "Walk for an hour", done: false },
+      { label: "Do the homework", done: false }]),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(resp => {
+        console.log(resp.ok); // true if the response is successful
+        console.log(resp.status); // the status code (e.g., 200, 400, etc.)
+        console.log(resp.text()); // the response as text
+      })
+      .then(data => {
+        console.log(data); // the object received from the server
+      })
+      .catch(error => {
+        console.log(error); // error handling
+      });
+    // Fetch the initial to-do list from the API
+    fetch("https://assets.breatheco.de/apis/fake/todos/user/salomon")
+      .then(resp => resp.json())
+      .then(data => setTodos(data))
+      .catch(error => console.log(error));
+  }, []);
 
   const addTodo = () => {
     if (inputValue.trim() === "") return;
@@ -98,9 +118,9 @@ const Home = () => {
               ))}
               <div className="todosLeft">{todos.length} tasks left</div>
               {todos.length > 0 && (
-                <button className="btn btn-danger" onClick={cleanAllTasks}>
+                <button className="btn btn-secondary" onClick={cleanAllTasks}>
                   Clean All Tasks
-                </button>
+                </button>                
               )}
             </ul>
           </div>
@@ -108,6 +128,6 @@ const Home = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Home;
